@@ -1,0 +1,28 @@
+<!-- Phase 3, Point 3 — Android Intent filter for system-level link interception
+     Include this <activity> block inside the <application> element of
+     AndroidManifest.xml. The autoVerify="true" attribute enables Android App
+     Links (verified deep links) so Bubbble can intercept https URLs without
+     the disambiguation dialog once the domain is verified.
+-->
+<activity
+    android:name=".LinkInterceptorActivity"
+    android:exported="true"
+    android:launchMode="singleTask"
+    android:theme="@style/Theme.Bubbble.Translucent">
+
+    <!--
+        Intercept every http / https URL opened from any app.
+        Android presents a chooser dialog if multiple apps claim the same
+        scheme; add App Links verification (autoVerify + assetlinks.json)
+        to become the default handler for your own domain.
+    -->
+    <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <!-- Handle both schemes -->
+        <data android:scheme="https" />
+        <data android:scheme="http" />
+    </intent-filter>
+
+</activity>
